@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container bg-light p-2 w-50">
+        <h3 class="text-center"><i class="fa fa-list" aria-hidden="true"></i>Todoly</h3>
+        <div class="row p-3">
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="newTask" value="">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-info" onclick="addTask()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Task  section start -->
+    <div class="container p-2 w-50 mt-3 border">
+        <div class="row">
+            <div class="col-md-5">
+                <h4>Pending Todos</h4>
+            </div>
+        </div>
+        <div id="pendingTask"></div>
+    </div>
+    <!-- Pending Task sectionn end -->
+
+    <!-- completed Task  section start -->
+    <div class="container p-2 w-50 mt-3 border">
+        <div class="row">
+            <div class="col-md-5">
+                <h4 class="text-muted">Completed Todos</h4>
+            </div>
+        </div>
+        <div id="completedTask"></div>
+    </div>
+    <!-- completed Task sectionn end -->
+
+    <script type="text/javascript" defer src="./js/main_script.js"></script>
+</body>
+
+</html>
