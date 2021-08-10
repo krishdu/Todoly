@@ -1,4 +1,22 @@
-1. UI
+# To-Do Application
+```
+Todoly
+```
+> While building this To-Do Application,
+> I learned how to create web elements dynamically,
+> how to remove a certain element,
+> understood the parent-child relation between elements
+> and explored some array functions in JS (e.g. splice, push, indexOf).
+> The most important thing I have learned is, how to solve a bigger problem in phases.
+
+| [Live Application (👆)](https://krishdu.github.io/Todoly/) |
+| ------ |
+
+<p align="center">
+<img alt="GIF" src="https://github.com/krishdu/Todoly/blob/master/todoly-image.gif?raw=true" width="800" height="400"/>
+</p>
+
+> UI
 
 ----------- Phase-1 : Adding element in List ------------
 Step 1:
