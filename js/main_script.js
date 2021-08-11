@@ -1,7 +1,7 @@
 pendingTaskList = Array();
 completedTaskList = Array();
-pendingTaskCount = 0;
-completedTaskCount = 0;
+let pendingTaskCount = 0;
+let completedTaskCount = 0;
 
 function addTask(){
     let newTask = document.querySelector("#newTask").value.trim();
