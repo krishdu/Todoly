@@ -85,6 +85,21 @@ Phase-5 : (UNDO) Pop item from completed task and push that element into pending
         + remove the element in completed task array using id
         + render last element in pending array
 
+```
+Phase-6 : Save In Local Storage
+```
 
+- Steps:
+    + When  a new task added or when user mark somthing as completed or pending
+        + check if there is already some pending todo present inn Local storage 
+            + if present remove the pending Todos
+        + set Item in local storage (creating a new state every time with fresh copy of dataset)   
+        + do this again step again for complete todo list
 
- 
+```
+Phase-7 : Render the Previous TODOs state 
+```
+* on loading the page :
+  * check if there is some TODOs in local storage
+    * if present store the list in  variables (pending and completed TODOs list) accordingly
+         * then render both the list (pending, completed) from  array variable

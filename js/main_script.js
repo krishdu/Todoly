@@ -3,21 +3,132 @@ completedTaskList = Array();
 let pendingTaskCount = 0;
 let completedTaskCount = 0;
 
-function addTask(){
+    
+ function addTask(){
     let newTask = document.querySelector("#newTask").value.trim();
     console.log(newTask);
     if(newTask != ''){
         pendingTaskList.push(newTask);
         //console.log(pendingTaskList);
         renderPendingItem();
+        saveInLocalStorage();
         document.querySelector("#newTask").value = "";
     }else{
         alert("Please add a task first");
     }
-}
+ }
+ 
+ function saveInLocalStorage(){
 
-function renderPendingItem(){
+    if(pendingTaskList.length != 0){
+        if(getPendingTodoFromLocalStorage()){
+            localStorage.removeItem("pendingTodos");
+        }
+        localStorage.setItem("pendingTodos", JSON.stringify(pendingTaskList));
+    } 
+
+    if(completedTaskList.length != 0){
+        if(getCompletedTodoFromLocalStorage()){
+            localStorage.removeItem("coompletedTodos");
+        }
+        localStorage.setItem("coompletedTodos", JSON.stringify(completedTaskList));
+    } 
+
+ }
+
+ function getPendingTodoFromLocalStorage(){
+    return JSON.parse(localStorage.getItem("pendingTodos")) || '';
+ }
+
+ function getCompletedTodoFromLocalStorage(){
+    return JSON.parse(localStorage.getItem("coompletedTodos")) || ''; 
+ }
+
+ function getPreviousTodosState(){
+    if(getPendingTodoFromLocalStorage()){
+        pendingTaskList = getPendingTodoFromLocalStorage();
+        renderAllPendingPreviousItem();
+    }
+
+    if(getCompletedTodoFromLocalStorage()){
+        completedTaskList = getCompletedTodoFromLocalStorage();
+        renderAllcCompletedPreviousItem();
+    }
+    
+ }
+ function renderAllPendingPreviousItem(){
     let pendingTaskDiv = document.querySelector("#pendingTask");
+    for(let i = 0; i < pendingTaskList.length ; i++){
+        pendingTaskCount++;
+
+        let row =  document.createElement("div");
+        row.setAttribute("class", "row p-1");
+        row.setAttribute("id",`pending-item-div-${pendingTaskCount}`);
+
+        let inputCol = document.createElement("div");
+        inputCol.setAttribute("class", "col-md-10");
+
+        let buttonCol = document.createElement("div");
+        buttonCol.setAttribute("class", "col-md-2");
+
+        let input = document.createElement("input");
+        input.setAttribute("class","form-control")
+        input.setAttribute("id",`pending-item-${pendingTaskCount}`);
+        input.setAttribute("readonly","true")
+        input.setAttribute("value", pendingTaskList[i]);
+
+        let button = document.createElement("Button");
+        button.setAttribute("class","btn btn-primary px-4");
+        button.setAttribute("id",`btn-pending-item-${pendingTaskCount}`);
+        button.innerHTML = "<i class='fa fa-check-circle' aria-hidden='true'></i>"
+        button.setAttribute("onClick",`markAsComplete('${input.value}', '${pendingTaskCount}')`);
+        
+        inputCol.appendChild(input);
+        buttonCol.appendChild(button);
+        row.appendChild(inputCol);
+        row.appendChild(buttonCol);
+        
+        pendingTaskDiv.appendChild(row);
+    }        
+ }
+
+ function renderAllcCompletedPreviousItem(){
+    let completedTaskDiv = document.querySelector("#completedTask");
+    for(let i = 0; i < completedTaskList.length; i++){
+        completedTaskCount++;
+
+        let row =  document.createElement("div");
+        row.setAttribute("class", "row p-1");
+        row.setAttribute("id",`completed-item-div-${completedTaskCount}`);
+
+        let inputCol = document.createElement("div");
+        inputCol.setAttribute("class", "col-md-10");
+
+        let buttonCol = document.createElement("div");
+        buttonCol.setAttribute("class", "col-md-2");
+
+        let input = document.createElement("input");
+        input.setAttribute("class","form-control")
+        input.setAttribute("id",`completed-item-${completedTaskCount}`);
+        input.setAttribute("readonly","true")
+        input.setAttribute("value", completedTaskList[i]);
+
+        let button = document.createElement("Button");
+        button.setAttribute("class","btn btn-primary px-4");
+        button.setAttribute("id",`btn-completed-item-${completedTaskCount}`);
+        button.innerHTML = "<i class='fa fa-undo' aria-hidden='true'></i>"
+        button.setAttribute("onClick",`markAsPending('${input.value}', '${completedTaskCount}')`);
+
+        inputCol.appendChild(input);
+        buttonCol.appendChild(button);
+        row.appendChild(inputCol);
+        row.appendChild(buttonCol);
+        completedTaskDiv.appendChild(row);
+    }
+ }
+
+ function renderPendingItem(){
+     let pendingTaskDiv = document.querySelector("#pendingTask");
      let i = pendingTaskList.length - 1;
      pendingTaskCount++;
 
@@ -50,10 +161,10 @@ function renderPendingItem(){
     
     pendingTaskDiv.appendChild(row);        
      
-}
+ }
 
   
-function markAsComplete(text, actual_index){
+ function markAsComplete(text, actual_index){
     //  console.log(actual_index);
        const index = pendingTaskList.indexOf(text);
        if (index > -1) {
@@ -62,13 +173,14 @@ function markAsComplete(text, actual_index){
          let pendingTaskDiv = document.querySelector(`#pending-item-div-${actual_index}`);
          pendingTaskDiv.remove();
          renderCompletedItem();
+         saveInLocalStorage();
        }
     //    console.log(pendingTaskList);
     //    console.log(completedTaskList);
        
  }
 
-function renderCompletedItem(){
+ function renderCompletedItem(){
     let completedTaskDiv = document.querySelector("#completedTask");
     let i = completedTaskList.length - 1;
     completedTaskCount++;
@@ -100,7 +212,7 @@ function renderCompletedItem(){
     row.appendChild(inputCol);
     row.appendChild(buttonCol);
     completedTaskDiv.appendChild(row);
-} 
+ } 
 
  function markAsPending(text, actual_index){
        // console.log(id)
@@ -111,6 +223,7 @@ function renderCompletedItem(){
         let completedTaskDiv = document.querySelector(`#completed-item-div-${actual_index}`);
         completedTaskDiv.remove();
         renderPendingItem();
+        saveInLocalStorage();
     }
     //    console.log(pendingTaskList);
     //    console.log(completedTaskList);   
