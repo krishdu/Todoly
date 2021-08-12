@@ -9,7 +9,6 @@ let completedTaskCount = 0;
     console.log(newTask);
     if(newTask != ''){
         pendingTaskList.push(newTask);
-        //console.log(pendingTaskList);
         renderPendingItem();
         saveInLocalStorage();
         document.querySelector("#newTask").value = "";
@@ -20,19 +19,15 @@ let completedTaskCount = 0;
  
  function saveInLocalStorage(){
 
-    if(pendingTaskList.length != 0){
-        if(getPendingTodoFromLocalStorage()){
-            localStorage.removeItem("pendingTodos");
-        }
-        localStorage.setItem("pendingTodos", JSON.stringify(pendingTaskList));
-    } 
-
-    if(completedTaskList.length != 0){
-        if(getCompletedTodoFromLocalStorage()){
-            localStorage.removeItem("coompletedTodos");
-        }
-        localStorage.setItem("coompletedTodos", JSON.stringify(completedTaskList));
-    } 
+    if(getPendingTodoFromLocalStorage()){
+        localStorage.removeItem("pendingTodos");
+    }
+    localStorage.setItem("pendingTodos", JSON.stringify(pendingTaskList));
+    
+    if(getCompletedTodoFromLocalStorage()){
+        localStorage.removeItem("coompletedTodos");
+    }
+    localStorage.setItem("coompletedTodos", JSON.stringify(completedTaskList));
 
  }
 
@@ -56,6 +51,7 @@ let completedTaskCount = 0;
     }
     
  }
+
  function renderAllPendingPreviousItem(){
     let pendingTaskDiv = document.querySelector("#pendingTask");
     for(let i = 0; i < pendingTaskList.length ; i++){
@@ -165,18 +161,21 @@ let completedTaskCount = 0;
 
   
  function markAsComplete(text, actual_index){
-    //  console.log(actual_index);
+    // console.log(actual_index);
        const index = pendingTaskList.indexOf(text);
+
        if (index > -1) {
          completedTaskList.push(text); 
          pendingTaskList.splice(index, 1);
          let pendingTaskDiv = document.querySelector(`#pending-item-div-${actual_index}`);
          pendingTaskDiv.remove();
          renderCompletedItem();
+        //  console.log(pendingTaskList);
+        //  console.log(completedTaskList);
          saveInLocalStorage();
        }
-    //    console.log(pendingTaskList);
-    //    console.log(completedTaskList);
+
+      
        
  }
 
